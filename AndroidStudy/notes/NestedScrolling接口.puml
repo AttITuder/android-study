@@ -1,0 +1,90 @@
+@startuml
+
+interface NestScrollingParent{
+ ....
+      boolean onStartNestedScroll(@NonNull View child, @NonNull View target, @ScrollAxis int axes);
+
+      void onNestedScrollAccepted(@NonNull View child, @NonNull View target, @ScrollAxis int axes);
+
+      void onStopNestedScroll(@NonNull View target);
+
+      void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed,
+              int dxUnconsumed, int dyUnconsumed);
+
+      void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed);
+
+      boolean onNestedFling(@NonNull View target, float velocityX, float velocityY, boolean consumed);
+
+      boolean onNestedPreFling(@NonNull View target, float velocityX, float velocityY);
+
+      @ScrollAxis
+      int getNestedScrollAxes();
+}
+interface NestScrollingParent2{
+    boolean onStartNestedScroll(@NonNull View child, @NonNull View target, @ScrollAxis int axes,
+            @NestedScrollType int type);
+
+    void onNestedScrollAccepted(@NonNull View child, @NonNull View target, @ScrollAxis int axes,
+            @NestedScrollType int type);
+
+    void onStopNestedScroll(@NonNull View target, @NestedScrollType int type);
+
+    void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed,
+            int dxUnconsumed, int dyUnconsumed, @NestedScrollType int type);
+
+    void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed,
+            @NestedScrollType int type);
+}
+interface NestScrollingParent3{
+    void onNestedScroll(@NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed,
+            int dyUnconsumed, @ViewCompat.NestedScrollType int type, @NonNull int[] consumed);
+}
+
+NestScrollingParent <|-- NestScrollingParent2
+NestScrollingParent2 <|-- NestScrollingParent3
+interface NestScrollingChild{
+    void setNestedScrollingEnabled(boolean enabled);
+
+    boolean isNestedScrollingEnabled();
+
+    boolean startNestedScroll(@ScrollAxis int axes);
+
+    void stopNestedScroll();
+
+    boolean hasNestedScrollingParent();
+
+    boolean dispatchNestedScroll(int dxConsumed, int dyConsumed,
+               int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow);
+
+    boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed,
+               @Nullable int[] offsetInWindow);
+
+    boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed);
+
+    boolean dispatchNestedPreFling(float velocityX, float velocityY);
+}
+interface NestScrollingChild2{
+
+    boolean startNestedScroll(@ScrollAxis int axes, @NestedScrollType int type);
+
+    void stopNestedScroll(@NestedScrollType int type);
+
+    boolean hasNestedScrollingParent(@NestedScrollType int type);
+
+    boolean dispatchNestedScroll(int dxConsumed, int dyConsumed,
+            int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow,
+            @NestedScrollType int type);
+
+    boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed,
+            @Nullable int[] offsetInWindow, @NestedScrollType int type);
+}
+interface NestScrollingChild3{
+    void dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed,
+            @Nullable int[] offsetInWindow, @ViewCompat.NestedScrollType int type,
+            @NonNull int[] consumed);
+}
+
+NestScrollingChild <|-- NestScrollingChild2
+NestScrollingChild2 <|-- NestScrollingChild3
+
+@enduml
