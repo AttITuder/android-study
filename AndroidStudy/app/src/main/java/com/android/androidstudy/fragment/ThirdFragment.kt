@@ -1,9 +1,11 @@
 package com.android.androidstudy.fragment
 
+import android.util.DisplayMetrics
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.android.androidstudy.R
 import com.android.customview.fragment.BaseFragment
+import kotlinx.android.synthetic.main.fragment_third.*
 
 /**
  * <p>描述:  </p>
@@ -15,7 +17,7 @@ import com.android.customview.fragment.BaseFragment
  */
 class ThirdFragment:BaseFragment() {
 
-    override fun getLayoutId(): Int = R.layout.fragment_first
+    override fun getLayoutId(): Int = R.layout.fragment_third
 
     override fun initView(view: View) {
 
@@ -25,5 +27,7 @@ class ThirdFragment:BaseFragment() {
     }
 
     override fun initData() {
+        tvScreenWidth.text = "屏幕宽度："+resources.displayMetrics.widthPixels;
+        tvScreenHeight.text = "屏幕高度："+resources.displayMetrics.heightPixels;
     }
 }
