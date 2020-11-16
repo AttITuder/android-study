@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.android.androidstudy.fragment.FirstFragment
 import com.android.androidstudy.fragment.SecondFragment
 import kotlinx.android.synthetic.main.activity_login.*
@@ -19,9 +20,13 @@ import kotlinx.android.synthetic.main.activity_login.*
  */
 class LoginActivity:AppCompatActivity() {
     private val fragments = ArrayList<Fragment>()
+    private lateinit var viewModel: LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+
 
         fragments.add(FirstFragment())
         fragments.add(SecondFragment())

@@ -1,18 +1,20 @@
 package com.android.androidstudy
 
+import android.app.Activity
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.telephony.TelephonyManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.androidstudy.fragment.FirstFragment
 import com.android.androidstudy.fragment.SecondFragment
 import com.android.androidstudy.fragment.ThirdFragment
-import com.android.androidstudy.utils.ScreenUtil
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main2.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +55,57 @@ class MainActivity : AppCompatActivity() {
                     else -> tab.text = "Third"
                 }
             }).attach()
+
+//        assembleUserAgent()
+//        var devicesid = getImeiOrMeidForQ(this)
+//        Log.d("dpc","getImeiOrMeidForQ:"+devicesid)
+//        val tm =
+//            this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+//       try {
+//            val imei1 =  tm.getImei(0)
+//            val imei2 = tm.getImei(1)
+//            Log.d("dpc","imei1:"+imei1)
+//            Log.d("dpc","imei2:"+imei2)
+//        } catch (e: Exception) {
+//        }
+
+    }
+
+
+    private fun assembleUserAgent(): String? {
+        val sb = StringBuilder()
+        sb.append("os/").append("Android").append(" ")
+        sb.append("model/").append(Build.MODEL).append(" ")
+        sb.append("brand/").append(Build.BRAND).append(" ")
+        sb.append("sdk/").append(Build.VERSION.SDK_INT).append(" ")
+        sb.append("devicesId/").append(Build.VERSION.SDK_INT).append(" ")
+        //        sb.append("applicationID/").append(BuildConfig.APPLICATION_ID).append(" ");
+        return sb.toString()
+    }
+
+
+    /**
+     * 系统10的时候
+     * 获取手机IMEI 或者MEID
+     *
+     * @return 手机IMEI
+     */
+    private fun getImeiOrMeidForQ(context: Context): String? {
+        Log.d("dpc","getImeiOrMeidForQ:")
+        try {
+            val manager =
+                context.getSystemService(Activity.TELEPHONY_SERVICE) as TelephonyManager
+            if (manager != null) {
+                return Settings.System.getString(
+                    context.contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
+        return null
     }
 
 
