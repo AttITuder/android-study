@@ -1,6 +1,0 @@
-println("This is executed during the initialization phase.")
-include ':shareLibrary'
-rootProject.name='AndroidStudy'
-include ':app'
-include ':customview'
-include ':shareComponent'
